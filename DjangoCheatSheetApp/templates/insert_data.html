@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block contents %}
+{% include 'header.html' with header_text="Insert Data" header_description="Simple Page for Insert Employee Data" %}
+<form method="post" action="{% url 'save_insert_data' %}">
+    {% csrf_token %}
+<label>Employee Name : </label>    <input type="text" name="employee_name"><br>
+<label>Employee Age : </label>    <input type="text" name="employee_age"><br>
+<label>Employee Address : </label>    <input type="text" name="employee_address"><br>
+<label>Employee Email : </label>    <input type="text" name="employee_email"><br>
+<label>Employee Designation : </label>
+    <select name="designation">
+    {% for designation_data in designation %}
+        <option value="{{ designation_data.id }}">{{ designation_data.name }}</option>
+    {% endfor %}
+    </select>
+    <br>
+    <button type="submit" name="submit">Save Data</button>
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+           {% if message.tags == 'error' %}
+            <p style="background:red;color:#fff">{{ message }}</p>
+           {% endif %}
+            {% if message.tags == 'success' %}
+            <p style="background:green;color:#fff">{{ message }}</p>
+           {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+</form>
+{% endblock contents %}

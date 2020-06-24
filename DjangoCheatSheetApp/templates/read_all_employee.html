@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block contents %}
+{% include 'header.html' with header_text="Insert Data" header_description="Simple Page for Insert Employee Data" %}
+<p>Total Data : {{ total_employees }}</p>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Age</th>
+        <th>Address</th>
+        <th>Designation</th>
+        <th>Action</th>
+    </tr>
+    {% for employee in employees %}
+    <tr>
+        <td>{{ employee.id }}</td>
+        <td>{{ employee.name }}</td>
+        <td>{{ employee.email }}</td>
+        <td>{{ employee.age }}</td>
+        <td>{{ employee.address }}</td>
+        <td>{{ employee.designation.name }}</td>
+        <td>
+            <a href="edit_employee/{{ employee.id }}">Edit</a>
+            <a href="delete_employee/{{ employee.id }}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock contents %}

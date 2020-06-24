@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block contents %}
+{% include 'header.html' with header_text="Insert Data" header_description="Simple Page for Edit Employee Data" %}
+<form method="post" action="{% url 'save_edit_data' %}">
+    {% csrf_token %}
+<label>Employee Name : </label>    <input type="text" name="name" value="{{ employee.name }}"><br>
+<input type="hidden" name="id" value="{{ employee.id }}"><br>
+<label>Employee Age : </label>    <input type="text" name="age" value="{{ employee.age }}"><br>
+<label>Employee Address : </label>    <input type="text" name="address" value="{{ employee.address }}"><br>
+<label>Employee Email : </label>    <input type="text" name="email" value="{{ employee.email }}"><br>
+<label>Employee Designation : </label>
+    <select name="designation">
+    {% for designation_data in designation %}
+        <option value="{{ designation_data.id }}"
+        {% if designation_data.id == employee.designation.id  %}
+                selected
+                {% endif %}
+        >{{ designation_data.name }}</option>
+    {% endfor %}
+    </select>
+    <br>
+    <button type="submit" name="submit">Edit Data Save</button>
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+           {% if message.tags == 'error' %}
+            <p style="background:red;color:#fff">{{ message }}</p>
+           {% endif %}
+            {% if message.tags == 'success' %}
+            <p style="background:green;color:#fff">{{ message }}</p>
+           {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+</form>
+{% endblock contents %}
